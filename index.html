@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -186,12 +186,15 @@
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 90%;
         }
 
         .indicator {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.5);
             cursor: pointer;
@@ -337,6 +340,11 @@
             .letter-content {
                 font-size: 1rem;
             }
+
+            .indicator {
+                width: 8px;
+                height: 8px;
+            }
         }
 
         .hidden {
@@ -375,10 +383,16 @@
         <!-- Photo Gallery -->
         <div class="photo-gallery">
             <div class="photo-container">
-                <img src="PXL_20240225_151356849.MP.jpg" alt="Memory 1" class="photo active" height="123">
+                <img src="PXL_20240225_151356849.MP.jpg" alt="Memory 1" class="photo active">
                 <img src="PXL_20240303_132252238.PORTRAIT.jpg" alt="Memory 2" class="photo">
                 <img src="PXL_20241006_145000331.jpg" alt="Memory 3" class="photo">
                 <img src="PXL_20241006_145131248.jpg" alt="Memory 4" class="photo">
+                <img src="photo5.jpg" alt="Memory 5" class="photo">
+                <img src="photo6.jpg" alt="Memory 6" class="photo">
+                <img src="photo7.jpg" alt="Memory 7" class="photo">
+                <img src="photo8.jpg" alt="Memory 8" class="photo">
+                <img src="photo9.jpg" alt="Memory 9" class="photo">
+                <img src="photo10.jpg" alt="Memory 10" class="photo">
             </div>
             
             <button class="nav-btn prev" onclick="changePhoto(-1)">
@@ -398,6 +412,12 @@
                 <div class="indicator" onclick="setPhoto(1)"></div>
                 <div class="indicator" onclick="setPhoto(2)"></div>
                 <div class="indicator" onclick="setPhoto(3)"></div>
+                <div class="indicator" onclick="setPhoto(4)"></div>
+                <div class="indicator" onclick="setPhoto(5)"></div>
+                <div class="indicator" onclick="setPhoto(6)"></div>
+                <div class="indicator" onclick="setPhoto(7)"></div>
+                <div class="indicator" onclick="setPhoto(8)"></div>
+                <div class="indicator" onclick="setPhoto(9)"></div>
             </div>
         </div>
 
