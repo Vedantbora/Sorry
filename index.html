@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Poorva - With Love</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background elements */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 20px;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeInDown 2s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Music controls */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .music-control:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .music-control svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+
+        /* Photo gallery */
+        .photo-gallery {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 40px;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: slideInUp 2s ease-out 0.5s both;
+        }
+
+        .photo-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .photo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.8s ease-in-out;
+            opacity: 0;
+            transform: scale(1.1);
+        }
+
+        .photo.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .nav-btn.prev {
+            left: 20px;
+        }
+
+        .nav-btn.next {
+            right: 20px;
+        }
+
+        .nav-btn svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+
+        /* Photo indicators */
+        .photo-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        /* Letter section */
+        .letter-section {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: fadeInUp 2s ease-out 1s both;
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #4a5568;
+        }
+
+        .letter-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .letter-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4a5568;
+            text-align: justify;
+        }
+
+        .typewriter {
+            border-right: 2px solid #667eea;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { border-color: #667eea; }
+            51%, 100% { border-color: transparent; }
+        }
+
+        .letter-footer {
+            margin-top: 30px;
+            text-align: right;
+            font-style: italic;
+            color: #667eea;
+        }
+
+        /* Button to show letter */
+        .show-letter-btn {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid white;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+
+        .show-letter-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .photo-container {
+                height: 300px;
+            }
+            
+            .letter-section {
+                padding: 20px;
+                margin: 0 10px;
+            }
+            
+            .letter-header h2 {
+                font-size: 2rem;
+            }
+            
+            .letter-content {
+                font-size: 1rem;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts animation -->
+    <div class="floating-hearts" id="hearts"></div>
+
+    <!-- Background music -->
+    <audio id="bgMusic" loop>
+        <source src="1.mp3" type="audio/mpeg">
+        <!-- Note: Replace with actual song URL -->
+    </audio>
+
+    <!-- Music control -->
+    <div class="music-control" id="musicControl">
+        <svg id="playIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="5,3 19,12 5,21"></polygon>
+        </svg>
+        <svg id="pauseIcon" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="6" y="4" width="4" height="16"></rect>
+            <rect x="14" y="4" width="4" height="16"></rect>
+        </svg>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>For Poorva</h1>
+            <p>A message from the heart... 💕</p>
+        </div>
+
+        <!-- Photo Gallery -->
+        <div class="photo-gallery">
+            <div class="photo-container">
+                <img src="PXL_20240225_151356849.MP.jpg" alt="Memory 1" class="photo active" height="123">
+                <img src="PXL_20240303_132252238.PORTRAIT.jpg" alt="Memory 2" class="photo">
+                <img src="PXL_20241006_145000331.jpg" alt="Memory 3" class="photo">
+                <img src="PXL_20241006_145131248.jpg" alt="Memory 4" class="photo">
+            </div>
+            
+            <button class="nav-btn prev" onclick="changePhoto(-1)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15,18 9,12 15,6"></polyline>
+                </svg>
+            </button>
+            
+            <button class="nav-btn next" onclick="changePhoto(1)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9,18 15,12 9,6"></polyline>
+                </svg>
+            </button>
+            
+            <div class="photo-indicators">
+                <div class="indicator active" onclick="setPhoto(0)"></div>
+                <div class="indicator" onclick="setPhoto(1)"></div>
+                <div class="indicator" onclick="setPhoto(2)"></div>
+                <div class="indicator" onclick="setPhoto(3)"></div>
+            </div>
+        </div>
+
+        <!-- Show Letter Button -->
+        <button class="show-letter-btn" onclick="showLetter()">
+            💌 Read My Letter
+        </button>
+
+        <!-- Letter Section -->
+        <div class="letter-section hidden" id="letterSection">
+            <div class="letter-header">
+                <h2>My Heart Speaks...</h2>
+                <p>💕 Words I couldn't say before 💕</p>
+            </div>
+            
+            <div class="letter-content">
+                <div id="typewriterText" class="typewriter"></div>
+            </div>
+            
+            <div class="letter-footer">
+                <p>With love and hope... 🌸</p>
+                <p><strong>- Always thinking of you</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables
+        let currentPhotoIndex = 0;
+        let isPlaying = false;
+        let letterShown = false;
+        const photos = document.querySelectorAll('.photo');
+        const indicators = document.querySelectorAll('.indicator');
+        const audio = document.getElementById('bgMusic');
+        const musicControl = document.getElementById('musicControl');
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
+
+        // Letter text
+        const letterText = `Hi Poorva,
+
+I know you probably don't want to talk to me at all… But honestly, for the past few days, I've been missing you a lot. I don't even know why — but seriously, I miss you a lot.
+Why didn't you come back one more time, Poorva? Yes, I was angry… and in that anger, I said a lot of things I shouldn't have. After that, I just needed some space…
+But I never thought you'd say such things about me. If you had just waited a few days… tried one more time… Maybe I would've spoken to you.
+I know I didn't come back either. It's been 8 months, Poorva. We haven't spoken at all…
+You used to say I was like your brother. So even now, just look at this — I can't write much more than this…
+Just know that this is my one attempt, from my side. In the end, the decision is yours.`;
+
+        // Initialize floating hearts
+        function createFloatingHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '💕';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                
+                heartsContainer.appendChild(heart);
+                
+                // Remove heart after animation
+                setTimeout(() => {
+                    heart.remove();
+                }, 15000);
+            }, 3000);
+        }
+
+        // Photo gallery functions
+        function changePhoto(direction) {
+            photos[currentPhotoIndex].classList.remove('active');
+            indicators[currentPhotoIndex].classList.remove('active');
+            
+            currentPhotoIndex += direction;
+            
+            if (currentPhotoIndex >= photos.length) {
+                currentPhotoIndex = 0;
+            } else if (currentPhotoIndex < 0) {
+                currentPhotoIndex = photos.length - 1;
+            }
+            
+            photos[currentPhotoIndex].classList.add('active');
+            indicators[currentPhotoIndex].classList.add('active');
+        }
+
+        function setPhoto(index) {
+            photos[currentPhotoIndex].classList.remove('active');
+            indicators[currentPhotoIndex].classList.remove('active');
+            
+            currentPhotoIndex = index;
+            
+            photos[currentPhotoIndex].classList.add('active');
+            indicators[currentPhotoIndex].classList.add('active');
+        }
+
+        // Auto-advance photos
+        setInterval(() => {
+            changePhoto(1);
+        }, 5000);
+
+        // Music control
+        musicControl.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+            } else {
+                audio.play().catch(e => {
+                    console.log('Audio play failed:', e);
+                });
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Show letter function
+        function showLetter() {
+            if (letterShown) return;
+            
+            const letterSection = document.getElementById('letterSection');
+            const typewriterElement = document.getElementById('typewriterText');
+            const showBtn = document.querySelector('.show-letter-btn');
+            
+            letterSection.classList.remove('hidden');
+            showBtn.style.display = 'none';
+            letterShown = true;
+            
+            // Typewriter effect
+            let i = 0;
+            const typeSpeed = 50;
+            
+            function typeWriter() {
+                if (i < letterText.length) {
+                    if (letterText.charAt(i) === '\n') {
+                        typewriterElement.innerHTML += '<br><br>';
+                    } else {
+                        typewriterElement.innerHTML += letterText.charAt(i);
+                    }
+                    i++;
+                    setTimeout(typeWriter, typeSpeed);
+                } else {
+                    // Remove cursor when done
+                    typewriterElement.classList.remove('typewriter');
+                }
+            }
+            
+            // Start typing after a short delay
+            setTimeout(typeWriter, 500);
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            createFloatingHearts();
+            
+            // Try to enable audio autoplay (may not work due to browser policies)
+            setTimeout(() => {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    playIcon.classList.add('hidden');
+                    pauseIcon.classList.remove('hidden');
+                }).catch(e => {
+                    console.log('Autoplay not allowed');
+                });
+            }, 2000);
+        });
+
+        // Add some interactive elements
+        document.addEventListener('click', (e) => {
+            // Create heart animation on click
+            if (!e.target.closest('.nav-btn') && !e.target.closest('.music-control') && !e.target.closest('.show-letter-btn')) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '💕';
+                heart.style.position = 'fixed';
+                heart.style.left = e.clientX + 'px';
+                heart.style.top = e.clientY + 'px';
+                heart.style.color = 'rgba(255, 255, 255, 0.8)';
+                heart.style.fontSize = '20px';
+                heart.style.pointerEvents = 'none';
+                heart.style.zIndex = '1000';
+                heart.style.animation = 'float 2s ease-out forwards';
+                
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>
